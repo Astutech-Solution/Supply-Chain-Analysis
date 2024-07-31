@@ -176,11 +176,11 @@ if selected=='Home':
                         st.write(month[i-1])
 
         def Slope(df,inp,cycle):
-            supp=list(df['VENDOR_ID'].unique())
+            supp=list(df['ITEM_ID'].unique())
             slopes=[]
             time=list(df['TRANSACTION_DATE'].dt.month)
             for i in supp:
-                y=list(df.loc[df['VENDOR_ID']==i]['REJECTION_RATE'])
+                y=list(df.loc[df['ITEM_ID']==i]['REJECTION_RATE'])
                 slope=[0.0]
                 N=len(y)
                 x=[i for i in range(1,N+1)]
