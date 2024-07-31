@@ -18,6 +18,7 @@ with st.sidebar:
         menu_title='Main Menu',
         options=["Home"]
     )
+    selected_months=st.slider("Spike Period ",1,12)
     
 if selected=='Home':
     file= st.file_uploader(label = 'Upload your dataset:',type=['xlsx','csv'])
@@ -123,7 +124,7 @@ if selected=='Home':
             xaxis_title="Date", yaxis_title="Rejection Rate")
         st.plotly_chart(fig,use_container_width=True)
 
-        def Trend(supp,slopes,time,inp):
+        def Trend(supp,slopes,time,inp,cycle):
             down_flag=0
             month=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
             up_flag=0
@@ -148,7 +149,7 @@ if selected=='Home':
             elif down_flag==0:
                 st.write("Vendor {0} have an downward trend".format(inp))
             if ne_flag==0:    
-                cycle_len=2
+                cycle_len=cycle
                 flag=0
                 count=0
                 l=[]
@@ -173,7 +174,7 @@ if selected=='Home':
                     for i in l:
                         st.write(month[i-1])
 
-        def Slope(df,inp):
+        def Slope(df,inp,cycle):
             supp=list(df['VENDOR_ID'].unique())
             slopes=[]
             time=list(df['TRANSACTION_DATE'].dt.month)
@@ -186,11 +187,11 @@ if selected=='Home':
                     if i+1<N:
                         slope.append((y[i+1]-y[i])/(x[i+1]-x[i]))
                 slopes.append(slope)
-            Trend(supp,slopes,time,inp)
+            Trend(supp,slopes,time,inp,cycle)
         #     print(y)
             return slopes
         
-        Slope(df1,inp1)
+        Slope(df1,inp1,selected_months)
         # item_list=list(rej_df['ITEM_ID'].unique())
         # inp3=st.selectbox(label="Item",options=item_list)
         # lists=list(rej_df.loc[rej_df['ITEM_ID']==inp3]["VENDOR_ID"].unique())
