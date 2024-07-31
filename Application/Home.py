@@ -127,6 +127,7 @@ if selected=='Home':
 
         def Trend(supp,slopes,time,inp,cycle):
             down_flag=0
+            st.write(slopes)
             month=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
             up_flag=0
             neutral_flag=0
